@@ -54,6 +54,8 @@ function saveFavorito(req, res){
   favorito.description = params.description;
   favorito.url = params.url;
 
+  console.log(favorito);
+
   favorito.save((err, favoritoStored) => {
     if (err){
       res.status(500).send({message: 'Error al guardar el marcador'});
