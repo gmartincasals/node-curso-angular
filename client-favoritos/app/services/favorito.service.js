@@ -23,6 +23,15 @@ var FavoritoService = (function () {
     FavoritoService.prototype.getFavorito = function (id) {
         return this._http.get(this.url + 'favorito/' + id).map(function (res) { return res.json(); });
     };
+    FavoritoService.prototype.addFavorito = function (favorito) {
+        console.log(favorito);
+        var json = JSON.stringify(favorito);
+        var params = json;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        console.log("Antes de la llamada al post");
+        console.log(params, headers);
+        return this._http.post(this.url + 'favorito', params, { headers: headers }).map(function (res) { return res.json(); });
+    };
     return FavoritoService;
 }());
 FavoritoService = __decorate([

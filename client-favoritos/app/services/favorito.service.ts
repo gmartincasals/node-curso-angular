@@ -19,4 +19,16 @@ export class FavoritoService{
   getFavorito(id: string){
   	return this._http.get(this.url+'favorito/'+id).map(res => res.json());
   }
+
+  addFavorito(favorito: Favorito){
+    console.log(favorito);
+    let json = JSON.stringify(favorito);
+    let params = json;
+    let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
+
+    console.log("Antes de la llamada al post");
+    console.log(params, headers);
+
+    return this._http.post(this.url+'favorito', params, {headers: headers}).map(res => res.json());
+  }
 }

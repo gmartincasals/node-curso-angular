@@ -10,24 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var favorito_service_1 = require("../services/favorito.service");
-var FavoritosListComponent = (function () {
-    function FavoritosListComponent(_favoritoService) {
+var favorito_1 = require("../models/favorito");
+var FavoritoAddComponent = (function () {
+    function FavoritoAddComponent(_favoritoService, _route, _router) {
         this._favoritoService = _favoritoService;
-        this.title = 'Listado de marcadores:';
-        this.loading = true;
+        this._route = _route;
+        this._router = _router;
+        this.titleSection = "Crear un favorito";
     }
-    FavoritosListComponent.prototype.ngOnInit = function () {
+    FavoritoAddComponent.prototype.ngOnInit = function () {
+        this.favorito = new favorito_1.Favorito("", "", "", "");
+        console.log(this.favorito);
+    };
+    FavoritoAddComponent.prototype.onSubmit = function () {
         var _this = this;
-        console.log('FavoritosListComponent Cargado!!!');
-        this._favoritoService.getFavoritos().subscribe(function (result) {
-            console.log(result);
-            _this.favoritos = result.favoritos;
-            if (!_this.favoritos) {
+        console.log(this.favorito);
+        this._favoritoService.addFavorito(this.favorito).subscribe(function (response) {
+            if (!_this.favorito) {
                 alert('Error en el servidor');
             }
             else {
-                _this.loading = false;
+                _this.favorito = response.favorito;
+                _this._router.navigate(['/marcador', _this.favorito._id]);
             }
         }, function (error) {
             _this.errorMessage = error;
@@ -37,15 +43,17 @@ var FavoritosListComponent = (function () {
             }
         });
     };
-    return FavoritosListComponent;
+    return FavoritoAddComponent;
 }());
-FavoritosListComponent = __decorate([
+FavoritoAddComponent = __decorate([
     core_1.Component({
-        selector: 'favoritos-list',
-        templateUrl: 'app/views/favoritos-list.html',
+        selector: 'favorito-add',
+        templateUrl: 'app/views/favorito-add.html',
         providers: [favorito_service_1.FavoritoService]
     }),
-    __metadata("design:paramtypes", [favorito_service_1.FavoritoService])
-], FavoritosListComponent);
-exports.FavoritosListComponent = FavoritosListComponent;
-//# sourceMappingURL=favoritos-list.component.js.map
+    __metadata("design:paramtypes", [favorito_service_1.FavoritoService,
+        router_1.ActivatedRoute,
+        router_1.Router])
+], FavoritoAddComponent);
+exports.FavoritoAddComponent = FavoritoAddComponent;
+//# sourceMappingURL=favorito-add.component.js.map
