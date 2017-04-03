@@ -12,16 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var favorito_service_1 = require("../services/favorito.service");
-var FavoritoDetailComponent = (function () {
-    function FavoritoDetailComponent(_favoritoService, _route, _router) {
+var favorito_1 = require("../models/favorito");
+var FavoritoEditComponent = (function () {
+    function FavoritoEditComponent(_favoritoService, _route, _router) {
         this._favoritoService = _favoritoService;
         this._route = _route;
         this._router = _router;
+        this.titleSection = 'Editar favorito';
     }
-    FavoritoDetailComponent.prototype.ngOnInit = function () {
+    FavoritoEditComponent.prototype.ngOnInit = function () {
+        this.favorito = new favorito_1.Favorito("", "", "", "");
         this.getFavorito();
     };
-    FavoritoDetailComponent.prototype.getFavorito = function () {
+    FavoritoEditComponent.prototype.getFavorito = function () {
         var _this = this;
         this._route.params.forEach(function (params) {
             var id = params['id'];
@@ -39,17 +42,39 @@ var FavoritoDetailComponent = (function () {
             });
         });
     };
-    return FavoritoDetailComponent;
+    FavoritoEditComponent.prototype.onSubmit = function () {
+        var _this = this;
+        console.log(this.favorito);
+        this._route.params.forEach(function (params) {
+            var id = params['id'];
+            _this._favoritoService.editFavorito(id, _this.favorito).subscribe(function (response) {
+                if (!response.favorito) {
+                    alert('Error en el servidor');
+                }
+                else {
+                    _this.favorito = response.favorito;
+                    _this._router.navigate(['/marcador', _this.favorito._id]);
+                }
+            }, function (error) {
+                _this.errorMessage = error;
+                if (_this.errorMessage != null) {
+                    console.log(_this.errorMessage);
+                    alert('Error en la petición');
+                }
+            });
+        });
+    };
+    return FavoritoEditComponent;
 }());
-FavoritoDetailComponent = __decorate([
+FavoritoEditComponent = __decorate([
     core_1.Component({
-        selector: 'favorito-detail',
-        templateUrl: 'app/views/favorito-detail.html',
+        selector: 'favoritos-edit',
+        templateUrl: 'app/views/favorito-add.html',
         providers: [favorito_service_1.FavoritoService]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof favorito_service_1.FavoritoService !== "undefined" && favorito_service_1.FavoritoService) === "function" && _a || Object, router_1.ActivatedRoute,
         router_1.Router])
-], FavoritoDetailComponent);
-exports.FavoritoDetailComponent = FavoritoDetailComponent;
+], FavoritoEditComponent);
+exports.FavoritoEditComponent = FavoritoEditComponent;
 var _a;
-//# sourceMappingURL=favorito-detail.component.js.map
+//# sourceMappingURL=favorito-edit.component.js.map

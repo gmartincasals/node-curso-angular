@@ -18,7 +18,7 @@ var FavoritoAddComponent = (function () {
         this._favoritoService = _favoritoService;
         this._route = _route;
         this._router = _router;
-        this.titleSection = "Crear un favorito";
+        this.titleSection = 'Crear favorito';
     }
     FavoritoAddComponent.prototype.ngOnInit = function () {
         this.favorito = new favorito_1.Favorito("", "", "", "");
@@ -28,7 +28,7 @@ var FavoritoAddComponent = (function () {
         var _this = this;
         console.log(this.favorito);
         this._favoritoService.addFavorito(this.favorito).subscribe(function (response) {
-            if (!_this.favorito) {
+            if (!response.favorito) {
                 alert('Error en el servidor');
             }
             else {
@@ -47,13 +47,13 @@ var FavoritoAddComponent = (function () {
 }());
 FavoritoAddComponent = __decorate([
     core_1.Component({
-        selector: 'favorito-add',
+        selector: 'favoritos-add',
         templateUrl: 'app/views/favorito-add.html',
         providers: [favorito_service_1.FavoritoService]
     }),
-    __metadata("design:paramtypes", [favorito_service_1.FavoritoService,
-        router_1.ActivatedRoute,
+    __metadata("design:paramtypes", [typeof (_a = typeof favorito_service_1.FavoritoService !== "undefined" && favorito_service_1.FavoritoService) === "function" && _a || Object, router_1.ActivatedRoute,
         router_1.Router])
 ], FavoritoAddComponent);
 exports.FavoritoAddComponent = FavoritoAddComponent;
+var _a;
 //# sourceMappingURL=favorito-add.component.js.map

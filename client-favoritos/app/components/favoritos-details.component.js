@@ -12,21 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var favorito_service_1 = require("../services/favorito.service");
-var FavoritoDetailComponent = (function () {
-    function FavoritoDetailComponent(_favoritoService, _route, _router) {
+var FavoritoDetailsComponent = (function () {
+    function FavoritoDetailsComponent(_favoritoService, _route, _router) {
         this._favoritoService = _favoritoService;
         this._route = _route;
         this._router = _router;
     }
-    FavoritoDetailComponent.prototype.ngOnInit = function () {
+    FavoritoDetailsComponent.prototype.ngOnInit = function () {
         this.getFavorito();
     };
-    FavoritoDetailComponent.prototype.getFavorito = function () {
+    FavoritoDetailsComponent.prototype.getFavorito = function () {
         var _this = this;
         this._route.params.forEach(function (params) {
             var id = params['id'];
             _this._favoritoService.getFavorito(id).subscribe(function (response) {
                 _this.favorito = response.favorito;
+                //console.log(this.favorito);
                 if (!_this.favorito) {
                     _this._router.navigate(['/']);
                 }
@@ -39,17 +40,17 @@ var FavoritoDetailComponent = (function () {
             });
         });
     };
-    return FavoritoDetailComponent;
+    return FavoritoDetailsComponent;
 }());
-FavoritoDetailComponent = __decorate([
+FavoritoDetailsComponent = __decorate([
     core_1.Component({
         selector: 'favorito-detail',
-        templateUrl: 'app/views/favorito-detail.html',
+        templateUrl: 'app/views/favoritos-details.html',
         providers: [favorito_service_1.FavoritoService]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof favorito_service_1.FavoritoService !== "undefined" && favorito_service_1.FavoritoService) === "function" && _a || Object, router_1.ActivatedRoute,
         router_1.Router])
-], FavoritoDetailComponent);
-exports.FavoritoDetailComponent = FavoritoDetailComponent;
+], FavoritoDetailsComponent);
+exports.FavoritoDetailsComponent = FavoritoDetailsComponent;
 var _a;
-//# sourceMappingURL=favorito-detail.component.js.map
+//# sourceMappingURL=favoritos-details.component.js.map

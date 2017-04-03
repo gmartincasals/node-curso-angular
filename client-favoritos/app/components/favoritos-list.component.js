@@ -14,12 +14,12 @@ var favorito_service_1 = require("../services/favorito.service");
 var FavoritosListComponent = (function () {
     function FavoritosListComponent(_favoritoService) {
         this._favoritoService = _favoritoService;
-        this.title = 'Listado de marcadores:';
+        this.title = 'Listado de marcadores';
         this.loading = true;
     }
     FavoritosListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('FavoritosListComponent Cargado!!!');
+        console.log('FavoritosListComponent cargado!!');
         this._favoritoService.getFavoritos().subscribe(function (result) {
             console.log(result);
             _this.favoritos = result.favoritos;
@@ -45,7 +45,8 @@ FavoritosListComponent = __decorate([
         templateUrl: 'app/views/favoritos-list.html',
         providers: [favorito_service_1.FavoritoService]
     }),
-    __metadata("design:paramtypes", [favorito_service_1.FavoritoService])
+    __metadata("design:paramtypes", [typeof (_a = typeof favorito_service_1.FavoritoService !== "undefined" && favorito_service_1.FavoritoService) === "function" && _a || Object])
 ], FavoritosListComponent);
 exports.FavoritosListComponent = FavoritosListComponent;
+var _a;
 //# sourceMappingURL=favoritos-list.component.js.map
