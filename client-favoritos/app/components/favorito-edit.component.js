@@ -44,7 +44,6 @@ var FavoritoEditComponent = (function () {
     };
     FavoritoEditComponent.prototype.onSubmit = function () {
         var _this = this;
-        console.log(this.favorito);
         this._route.params.forEach(function (params) {
             var id = params['id'];
             _this._favoritoService.editFavorito(id, _this.favorito).subscribe(function (response) {
@@ -72,9 +71,9 @@ FavoritoEditComponent = __decorate([
         templateUrl: 'app/views/favorito-add.html',
         providers: [favorito_service_1.FavoritoService]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof favorito_service_1.FavoritoService !== "undefined" && favorito_service_1.FavoritoService) === "function" && _a || Object, router_1.ActivatedRoute,
+    __metadata("design:paramtypes", [favorito_service_1.FavoritoService,
+        router_1.ActivatedRoute,
         router_1.Router])
 ], FavoritoEditComponent);
 exports.FavoritoEditComponent = FavoritoEditComponent;
-var _a;
 //# sourceMappingURL=favorito-edit.component.js.map

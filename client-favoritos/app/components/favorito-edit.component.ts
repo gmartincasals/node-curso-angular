@@ -50,7 +50,6 @@ export class FavoritoEditComponent implements OnInit{
 		}
 
 	public onSubmit(){
-		console.log(this.favorito);		
 		this._route.params.forEach((params: Params) => {
 			let id = params['id'];
 			this._favoritoService.editFavorito(id, this.favorito).subscribe(

@@ -12,8 +12,16 @@
 				btn-default">Ir al marcador</a>
 				<a [routerLink]="['/marcador', favorito._id]" class="btn btn-ver">Ver</a>
 				<a [routerLink]="['/editar-marcador', favorito._id]" class="btn btn-editar">Editar</a>
-				<a href="{{favorito.url}}" target="_blank" class="btn btn-eliminar">Eliminar</a>
-		</p>
+				<a (click)="onBorrarConfirm(favorito._id)" class="btn btn-eliminar">Eliminar</a>
+			</p>
+			<div class="seguro" *ngIf="confirmado == favorito._id">
+				<strong>¿Estás seguro de querer borrar el favorito?</strong>
+				<br/>
+				<p>
+					<a (click)="onBorrarFavorito(favorito._id)" class="btn btn-eliminar">Eliminar</a>
+					<a (click)="onCancelarConfirm(favorito._id)" class="btn btn-ver">Cancelar</a>
+				</p>
+			</div>		
 		</div>
 	</li>
 	

@@ -130,6 +130,7 @@ footer{
 	height: 120px;
 	padding-top: 10px;
 	padding-bottom: 20px;
+	padding-right: 35px;
 	color: gray;
 	background: white;
 	margin: 10px;
@@ -171,4 +172,15 @@ footer{
 
 #spinner{
 	width: 50px
+}
+
+.seguro{
+	position: absolute;
+	margin-top: -95px;
+	padding-top: 5px;
+	background: white;
+	width: 275px;
+	text-align: center;
+	border: 1px solid gray;
+	border-radius: 4px;
 }
