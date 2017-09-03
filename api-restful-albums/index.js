@@ -1,22 +1,18 @@
 'use strict'
 
-var mongoose = require('mongoose');
 var app = require('./app');
 var port = process.env.PORT || 3700;
+var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/app_albums', (err, res) => {
+mongoose.connect('mongodb://localhost:27017/albums',(err, res) => {
+
 	if(err){
 		throw err;
-	}else{
-		console.log("Base de datos correctamente....");
-
-		app.listen(port, function(){
-			console.log("API RESTful de albums escuchando....")
-
-
+	} else {
+		console.log('Conexión a MongoDB correcta');
+		app.listen(port, function() {
+			console.log(`API REST ALBUMS funcionando en http://localhost:${port}`);
 		});
-
 	}
 
-
-});	
+});
