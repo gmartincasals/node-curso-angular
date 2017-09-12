@@ -13,12 +13,46 @@ export class ImageService{
 		this.url = GLOBAL.url;
 	}
 
+	getApiUrl(segment = ''):string{
+		var url = this.url + segment;
+		return url;
+	}
+
+	getImages(albumId=null){
+		if(albumId == null){
+			return this._http.get(this.url+'images')
+				 .map(res => res.json());
+		}else{
+			return this._http.get(this.url+'images/'+albumId)
+							 .map(res => res.json());
+		}
+	}
+
+	getImage(id){
+		return this._http.get(this.url+'image/'+id)
+							 .map(res => res.json());
+	}
+
 	addImage(image: Image){
 		let json = JSON.stringify(image);
 		let params = json;
-		let headers = new Headers({'content-Type':'application/json'});
+		let headers = new Headers({'Content-Type':'application/json'});
 
 		return this._http.post(this.url+'image', params, {headers: headers})
-			.map(res => res.json());
+						 .map(res => res.json());
+	}
+
+	editImage(id: string, image: Image){
+		let json = JSON.stringify(image);
+		let params = json;
+		let headers = new Headers({'Content-Type':'application/json'});
+
+		return this._http.put(this.url+'image/'+id, params, {headers: headers})
+						 .map(res => res.json());
+	}
+
+	deleteImage(id: string){
+		return this._http.delete(this.url+'image/'+id)
+							 .map(res => res.json());
 	}
 }

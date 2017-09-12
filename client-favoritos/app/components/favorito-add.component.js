@@ -8,17 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var favorito_service_1 = require("../services/favorito.service");
-var favorito_1 = require("../models/favorito");
+var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var favorito_service_1 = require('../services/favorito.service');
+var favorito_1 = require('../models/favorito');
 var FavoritoAddComponent = (function () {
     function FavoritoAddComponent(_favoritoService, _route, _router) {
         this._favoritoService = _favoritoService;
         this._route = _route;
         this._router = _router;
-        this.titleSection = 'Crear favorito';
+        this.titleSection = "Crear favorito";
     }
     FavoritoAddComponent.prototype.ngOnInit = function () {
         this.favorito = new favorito_1.Favorito("", "", "", "");
@@ -43,17 +42,15 @@ var FavoritoAddComponent = (function () {
             }
         });
     };
+    FavoritoAddComponent = __decorate([
+        core_1.Component({
+            selector: 'favorito-add',
+            templateUrl: 'app/views/favorito-add.html',
+            providers: [favorito_service_1.FavoritoService]
+        }), 
+        __metadata('design:paramtypes', [favorito_service_1.FavoritoService, router_1.ActivatedRoute, router_1.Router])
+    ], FavoritoAddComponent);
     return FavoritoAddComponent;
 }());
-FavoritoAddComponent = __decorate([
-    core_1.Component({
-        selector: 'favoritos-add',
-        templateUrl: 'app/views/favorito-add.html',
-        providers: [favorito_service_1.FavoritoService]
-    }),
-    __metadata("design:paramtypes", [favorito_service_1.FavoritoService,
-        router_1.ActivatedRoute,
-        router_1.Router])
-], FavoritoAddComponent);
 exports.FavoritoAddComponent = FavoritoAddComponent;
 //# sourceMappingURL=favorito-add.component.js.map

@@ -1,7 +1,7 @@
 'use strict'
 
 var express = require('express');
-var AlbumController =  require('../controllers/album');
+var AlbumController = require('../controllers/album');
 var api = express.Router();
 
 api.get('/album/:id', AlbumController.getAlbum);

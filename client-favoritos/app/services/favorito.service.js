@@ -8,10 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-require("rxjs/add/operator/map");
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/map');
 var FavoritoService = (function () {
     function FavoritoService(_http) {
         this._http = _http;
@@ -43,11 +42,11 @@ var FavoritoService = (function () {
         return this._http.delete(this.url + 'favorito/' + id)
             .map(function (res) { return res.json(); });
     };
+    FavoritoService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], FavoritoService);
     return FavoritoService;
 }());
-FavoritoService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
-], FavoritoService);
 exports.FavoritoService = FavoritoService;
 //# sourceMappingURL=favorito.service.js.map

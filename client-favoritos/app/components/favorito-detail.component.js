@@ -8,10 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var favorito_service_1 = require("../services/favorito.service");
+var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var favorito_service_1 = require('../services/favorito.service');
 var FavoritoDetailComponent = (function () {
     function FavoritoDetailComponent(_favoritoService, _route, _router) {
         this._favoritoService = _favoritoService;
@@ -26,7 +25,17 @@ var FavoritoDetailComponent = (function () {
         this._route.params.forEach(function (params) {
             var id = params['id'];
             _this._favoritoService.getFavorito(id).subscribe(function (response) {
+                /*
+                this.favorito = {
+                                  title:'hola',
+                                  description: '2',
+                                  url: '32',
+                                  _id: 12
+                                };
+                                console.log(this.favorito);
+                */
                 _this.favorito = response.favorito;
+                //console.log(this.favorito);
                 if (!_this.favorito) {
                     _this._router.navigate(['/']);
                 }
@@ -39,17 +48,15 @@ var FavoritoDetailComponent = (function () {
             });
         });
     };
+    FavoritoDetailComponent = __decorate([
+        core_1.Component({
+            selector: 'favorito-detail',
+            templateUrl: 'app/views/favorito-detail.html',
+            providers: [favorito_service_1.FavoritoService]
+        }), 
+        __metadata('design:paramtypes', [favorito_service_1.FavoritoService, router_1.ActivatedRoute, router_1.Router])
+    ], FavoritoDetailComponent);
     return FavoritoDetailComponent;
 }());
-FavoritoDetailComponent = __decorate([
-    core_1.Component({
-        selector: 'favorito-detail',
-        templateUrl: 'app/views/favorito-detail.html',
-        providers: [favorito_service_1.FavoritoService]
-    }),
-    __metadata("design:paramtypes", [favorito_service_1.FavoritoService,
-        router_1.ActivatedRoute,
-        router_1.Router])
-], FavoritoDetailComponent);
 exports.FavoritoDetailComponent = FavoritoDetailComponent;
 //# sourceMappingURL=favorito-detail.component.js.map

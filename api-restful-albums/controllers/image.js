@@ -4,16 +4,70 @@ var path = require('path');
 var Image = require('../models/image');
 var Album = require('../models/album');
 
-function getImage(req, res) {
+function pruebas(req, res){
+	res.status(200).send({message: 'Pruebas de controlador de imagenes'});
+}
+
+function getImage(req, res){
 	var imageId = req.params.id;
 
 	Image.findById(imageId, (err, image) => {
-		_executeWithErrorControl(res, err, image);
+
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(!image){
+				res.status(404).send({message: 'No existe la imagen'});
+			}else{
+
+				Album.populate(image, {path: 'album'}, (err, image) => {
+					if(err){
+						res.status(500).send({message: 'Error en la petición'});
+					}else{
+						res.status(200).send({image});
+					}
+				});
+
+			}
+		}
+
 	});
 }
 
+function getImages(req, res){
+	var albumId = req.params.album;
 
-function saveImage(req, res) {
+	if(!albumId){
+		// Sacar todas las imagenes de bbdd
+		var find = Image.find({}).sort('title');
+
+	}else{
+		// Sacar todas las imagenes asociadas el album
+		var find = Image.find({album: albumId}).sort('title');
+	}
+
+	find.exec((err, images) => {
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(!images){
+				res.status(404).send({message: 'No hay imágenes en este album !!'});
+			}else{
+
+				Album.populate(images, {path: 'album'}, (err, images) => {
+					if(err){
+						res.status(500).send({message: 'Error en la petición'});
+					}else{
+						res.status(200).send({images});
+					}
+				});
+
+			}
+		}
+	});
+}
+
+function saveImage(req, res){
 	var image = new Image();
 
 	var params = req.body;
@@ -21,133 +75,103 @@ function saveImage(req, res) {
 	image.picture = null;
 	image.album = params.album;
 
-	image.save((err, imageStored) => {	
-		_executeWithErrorControl(res, err, imageStored);
+	image.save((err, imageStored) => {
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(!imageStored){
+				res.status(404).send({message: 'No se ha guardado la imagen !!'});
+			}else{
+				res.status(200).send({image: imageStored});
+			}
+		}
 	});
+
 }
 
-
-function updateImage(req, res) {
+function updateImage(req, res){
 	var imageId = req.params.id;
 	var update = req.body;
 
-	Image.findByIdAndUpdate(imageId, update, (err, imageUpdated) => {
-		_executeWithErrorControl(res, err, imageUpdated);
+	Image.findByIdAndUpdate(imageId, update, (err, imageUpdated) =>{
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		}else{
+			if(!imageUpdated){
+				res.status(404).send({message: 'No se ha actualizado la imagen !!'});
+			}else{
+				res.status(200).send({image: imageUpdated});
+			}
+		}
 	});
 }
 
-
-function deleteImage(req, res) {
+function deleteImage(req, res){
 	var imageId = req.params.id;
 
-	Image.findByIdAndRemove(imageId, (err, imageDeleted) => {
-		_executeWithErrorControl(res, err, imageDeleted);
-	});
+	Image.findByIdAndRemove(imageId, (err, imageRemoved) => {
+		if(err){
+			res.status(500).send({message: 'Error al borrar la imagen'});
+		}else{
+			if(!imageRemoved){
+				res.status(404).send({message: 'No se ha podido eliminar la imagen !!'});
+			}else{
+				res.status(200).send({image: imageRemoved});
+			}
+		}
+	}); 
 }
-
-
-function getImages(req, res) {
-	var albumId = req.params.album;
-
-	if (!albumId) {
-		//Sacar todas las imagenes de la bbdd
-		var imagesFinded = Image.find({}).sort('title')
-	} else {
-		//Sacar todas las imagenes del album indicado
-		var imagesFinded = Image.find({album: albumId}).sort('title')
-	}
-
-	imagesFinded.exec((err, images) => {
-		_executeWithErrorControl(res, err, images);
-	});
-}
-
 
 function uploadImage(req, res){
 	var imageId = req.params.id;
-	var file_name = 'No subido...'
+	var file_name = 'No subido...';
 
-	if(req.files){ 
+	if(req.files){
+
 		var file_path = req.files.image.path;
-		var file_split = file_path.split('/');
+		var file_split = file_path.split('\\');
 		var file_name = file_split[1];
 
-		Image.findByIdAndUpdate(imageId, {picture: file_name}, (err, imageUpdated) => {
-		_executeWithErrorControl(res, err, imageUpdated, 'image');
-		});
-
-	} else {
-		res.status(400).send({message: 'No se ha recibido ninguna imagen'})
-	}
-
-}
-
-function getImageByFile(req, res){
-	var imageFile = req.params.imageFile;
-	_getImage(res, imageFile)
-}
-
-function getImageById(req, res){
-
-	var imageId = req.params.id;
-
-	Image.findById(imageId, (err, image) => {
-		if(err){
-			res.status(500).send({message: 'Error en la petición'})
-		} else {
-				if (!image){
-				res.status(404).send({message: 'No existe el objeto'})
-			} else {
-				_getImage(res, image.picture)			
+		Image.findByIdAndUpdate(imageId, {picture: file_name}, (err, imageUpdated) =>{
+			if(err){
+				res.status(500).send({message: 'Error en la petición'});
+			}else{
+				if(!imageUpdated){
+					res.status(404).send({message: 'No se ha actualizado la imagen !!'});
+				}else{
+					res.status(200).send({image: imageUpdated});
+				}
 			}
-		}
-	});	
-}
-
-
-function _executeWithErrorControl(res, err, obj) {	
-	if(err){
-		res.status(500).send({message: 'Error en la petición'})
-	} else {
-		if (!obj){
-			res.status(404).send({message: 'No existe el objeto'})
-		} else {
-			_populateWithAlbum(res, obj);
-			console.log('Paso por el servidor')					
-		}
+		});
+	}else{
+		res.status(200).send({message: 'No has subido ninguna imagen!!'});
 	}
+	
 }
 
-function _populateWithAlbum (res, obj){
-	Album.populate(obj, {path: 'album'}, (err, obj) => {
-		if(err){
-			res.status(500).send({message: 'Error en la petición'})
-		} else {
-			res.status(200).send({images: obj})					
-		}											
-	});			
+var fs = require('fs');
+function getImageFile(req, res){
+	var imageFile = req.params.imageFile;
+
+
+	fs.exists('./uploads/'+imageFile, function(exists) { 
+	  if (exists) { 
+	    res.sendFile(path.resolve('./uploads/'+imageFile));
+	  }else{
+	  	res.status(200).send({message: 'No existe la imagen !!'});
+	  }
+	}); 
+
+	
 }
-
-
-var fs =  require('fs');
-function _getImage(res, imageFile) {
-	fs.exists('./uploads/'+imageFile, (exists) => {
-		if (exists) {			
-			res.sendFile(path.resolve('./uploads/'+imageFile))
-		} else {
-			res.status(400).send({message: 'No se ha recibido ninguna imagen'})
-		}
-	});
-}
-
 
 module.exports = {
+	pruebas,
 	getImage,
+	getImages,
 	saveImage,
 	updateImage,
 	deleteImage,
-	getImages,
 	uploadImage,
-	getImageByFile,
-	getImageById
-}
+	getImageFile
+};

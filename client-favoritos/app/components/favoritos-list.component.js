@@ -8,13 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var favorito_service_1 = require("../services/favorito.service");
+var core_1 = require('@angular/core');
+var favorito_service_1 = require('../services/favorito.service');
 var FavoritosListComponent = (function () {
     function FavoritosListComponent(_favoritoService) {
         this._favoritoService = _favoritoService;
-        this.title = 'Listado de marcadores';
+        this.title = 'Listado de marcadores:';
         this.loading = true;
     }
     FavoritosListComponent.prototype.ngOnInit = function () {
@@ -24,7 +23,7 @@ var FavoritosListComponent = (function () {
     FavoritosListComponent.prototype.getFavoritos = function () {
         var _this = this;
         this._favoritoService.getFavoritos().subscribe(function (result) {
-            console.log('pasamos por getFavoritos' + result);
+            console.log(result);
             _this.favoritos = result.favoritos;
             if (!_this.favoritos) {
                 alert('Error en el servidor');
@@ -61,15 +60,15 @@ var FavoritosListComponent = (function () {
             }
         });
     };
+    FavoritosListComponent = __decorate([
+        core_1.Component({
+            selector: 'favoritos-list',
+            templateUrl: 'app/views/favoritos-list.html',
+            providers: [favorito_service_1.FavoritoService]
+        }), 
+        __metadata('design:paramtypes', [favorito_service_1.FavoritoService])
+    ], FavoritosListComponent);
     return FavoritosListComponent;
 }());
-FavoritosListComponent = __decorate([
-    core_1.Component({
-        selector: 'favoritos-list',
-        templateUrl: 'app/views/favoritos-list.html',
-        providers: [favorito_service_1.FavoritoService]
-    }),
-    __metadata("design:paramtypes", [favorito_service_1.FavoritoService])
-], FavoritosListComponent);
 exports.FavoritosListComponent = FavoritosListComponent;
 //# sourceMappingURL=favoritos-list.component.js.map

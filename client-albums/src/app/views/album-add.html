@@ -8,7 +8,7 @@
 			El nombre es obligatorio
 		</span>
 	</p>
-	
+
 	<label>Descripción: </label>
 	<p>
 		<textarea #description="ngModel" name="description" [(ngModel)]="album.description" required></textarea>
@@ -18,5 +18,4 @@
 	</p>
 
 	<input type="submit" value="Crear album" [disabled]="!formAlbum.form.valid" />
-
 </form>
